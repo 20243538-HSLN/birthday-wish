@@ -9,6 +9,7 @@ import { Step4Sending } from './components/Step4Sending';
 import { Step5DreamSky } from './components/Step5DreamSky';
 import { Step, CakeFlavor, Language } from './types';
 import { soundEngine } from './utils/soundEngine';
+import { sendWishToGoogleSheet } from './utils/googleSheets';
 
 export default function App() {
   const [step, setStep] = useState<Step>('welcome');
@@ -130,7 +131,17 @@ export default function App() {
                 cakeFlavor={cakeFlavor}
                 lang={lang}
                 onChangeWish={setWishText}
-                onBlowOutSuccess={() => setStep('sending')}
+                onBlowOutSuccess={() => {
+                  sendWishToGoogleSheet({
+                    recipientName,
+                    birthdate,
+                    age,
+                    cakeFlavor,
+                    customMessage,
+                    wishText,
+                  });
+                  setStep('sending');
+                }}
               />
             </motion.div>
           )}
