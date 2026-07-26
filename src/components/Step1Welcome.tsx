@@ -175,10 +175,10 @@ export const Step1Welcome: React.FC<Step1WelcomeProps> = ({
               placeholder={
                 errorMsg ||
                 (isKo
-                  ? '이름을 작성해주세요! (예: 장원영)'
+                  ? '당신의 이름을 작성해주세요! (예: 장원영)'
                   : isEn
-                  ? 'Enter name (e.g., Vicky)'
-                  : 'အမည် ရေးပါ (ဥပမာ - ဟန်နီနွေဦး)')
+                  ? 'Enter your name (e.g., Vicky)'
+                  : 'သင့်နာမည် ရေးပါ (ဥပမာ - ဟန်နီနွေဦး)')
               }
               className={`w-full bg-[#fff0f5] border ${
                 errorMsg ? 'border-red-400 animate-shake' : 'border-[#f5b8cc]'
