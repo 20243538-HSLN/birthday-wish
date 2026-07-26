@@ -3,17 +3,22 @@ export interface WishData {
   birthdate: string;
   age: number;
   cakeFlavor: string;
-  customMessage: string;
   wishText: string;
+  customMessage?: string;
   submittedAt?: string;
 }
 
 const STORAGE_KEY = 'birthday_card_gsheet_webhook_url';
 
+// 💡 Paste your Google Apps Script Web App URL here so all friends' responses are saved automatically!
+export const DEFAULT_WEBHOOK_URL = '';
+
 export function getStoredWebhookUrl(): string {
   const envUrl = ((import.meta as any).env?.VITE_GOOGLE_SHEET_WEBHOOK_URL as string) || '';
   if (envUrl) return envUrl;
-  return localStorage.getItem(STORAGE_KEY) || '';
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored) return stored;
+  return DEFAULT_WEBHOOK_URL;
 }
 
 export function saveStoredWebhookUrl(url: string): void {
@@ -33,7 +38,6 @@ export async function sendWishToGoogleSheet(data: WishData): Promise<boolean> {
     birthdate: data.birthdate || '',
     age: data.age || 0,
     cakeFlavor: data.cakeFlavor || '',
-    customMessage: data.customMessage || '',
     wishText: data.wishText || '',
   };
 

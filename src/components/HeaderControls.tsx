@@ -190,16 +190,32 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
               )}
             </div>
 
-            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-[11px] text-emerald-800 space-y-1">
+            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-[11px] text-emerald-800 space-y-2">
               <div className="font-semibold flex items-center gap-1 text-emerald-900">
-                <HelpCircle size={13} /> How to get your Web App URL?
+                <HelpCircle size={13} /> Apps Script Code (6 Columns)
               </div>
-              <ol className="list-decimal list-inside space-y-0.5 text-emerald-700 pl-1">
-                <li>Create a Google Sheet in your Google Drive.</li>
-                <li>Go to <b>Extensions &gt; Apps Script</b>.</li>
-                <li>Paste the script provided in the instructions.</li>
-                <li>Click <b>Deploy &gt; New deployment &gt; Web App</b>.</li>
-                <li>Set access to <b>Anyone</b>, deploy, and copy the URL here!</li>
+              <p className="text-[10px] text-emerald-700">
+                In Google Sheet &gt; <b>Extensions &gt; Apps Script</b>, replace all code with this:
+              </p>
+              <pre className="bg-emerald-950 text-emerald-100 p-2 rounded-lg text-[10px] font-mono overflow-x-auto select-all leading-tight">
+{`function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = JSON.parse(e.postData.contents);
+  sheet.appendRow([
+    data.submittedAt,
+    data.recipientName,
+    data.birthdate,
+    data.age,
+    data.cakeFlavor,
+    data.wishText
+  ]);
+  return ContentService.createTextOutput("Success");
+}`}
+              </pre>
+              <ol className="list-decimal list-inside space-y-0.5 text-emerald-700 pl-1 text-[10px]">
+                <li>Save script &amp; click <b>Deploy &gt; New deployment &gt; Web App</b>.</li>
+                <li>Set <b>Who has access</b> to <b>Anyone</b>.</li>
+                <li>Click <b>Deploy</b>, copy the Web App URL and paste above!</li>
               </ol>
             </div>
           </div>
