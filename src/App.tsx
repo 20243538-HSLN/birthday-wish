@@ -18,7 +18,7 @@ export default function App() {
   const [age, setAge] = useState<number>(20);
   const [customMessage, setCustomMessage] = useState('');
   const [wishText, setWishText] = useState('');
-  const [cakeFlavor, setCakeFlavor] = useState<CakeFlavor>('pink');
+  const [cakeFlavor, setCakeFlavor] = useState<CakeFlavor>('strawberry');
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [bgmEnabled, setBgmEnabled] = useState(false);
   const [lang, setLang] = useState<Language>('ko');

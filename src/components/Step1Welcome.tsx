@@ -17,21 +17,21 @@ interface Step1WelcomeProps {
 }
 
 const FLAVORS_KO: { id: CakeFlavor; label: string; icon: string; color: string }[] = [
-  { id: 'pink', label: '딸기 🍓', icon: '🍓', color: 'bg-pink-100 text-pink-700 border-pink-300' },
+  { id: 'strawberry', label: '딸기 🍓', icon: '🍓', color: 'bg-pink-100 text-pink-700 border-pink-300' },
   { id: 'chocolate', label: '초코 🍫', icon: '🍫', color: 'bg-[#ede0d8] text-[#4a2810] border-[#9e6340]' },
   { id: 'matcha', label: '말차 🍵', icon: '🍵', color: 'bg-emerald-100 text-emerald-800 border-emerald-300' },
   { id: 'cheese', label: '치즈 🧀', icon: '🧀', color: 'bg-yellow-100 text-yellow-800 border-yellow-300' },
 ];
 
 const FLAVORS_EN: { id: CakeFlavor; label: string; icon: string; color: string }[] = [
-  { id: 'pink', label: 'Strawberry 🍓', icon: '🍓', color: 'bg-pink-100 text-pink-700 border-pink-300' },
+  { id: 'strawberry', label: 'Strawberry 🍓', icon: '🍓', color: 'bg-pink-100 text-pink-700 border-pink-300' },
   { id: 'chocolate', label: 'Chocolate 🍫', icon: '🍫', color: 'bg-[#ede0d8] text-[#4a2810] border-[#9e6340]' },
   { id: 'matcha', label: 'Matcha 🍵', icon: '🍵', color: 'bg-emerald-100 text-emerald-800 border-emerald-300' },
   { id: 'cheese', label: 'Cheese 🧀', icon: '🧀', color: 'bg-yellow-100 text-yellow-800 border-yellow-300' },
 ];
 
 const FLAVORS_MY: { id: CakeFlavor; label: string; icon: string; color: string }[] = [
-  { id: 'pink', label: 'စတော်ဘယ်ရီ 🍓', icon: '🍓', color: 'bg-pink-100 text-pink-700 border-pink-300' },
+  { id: 'strawberry', label: 'စတော်ဘယ်ရီ 🍓', icon: '🍓', color: 'bg-pink-100 text-pink-700 border-pink-300' },
   { id: 'chocolate', label: 'ချောကလက် 🍫', icon: '🍫', color: 'bg-[#ede0d8] text-[#4a2810] border-[#9e6340]' },
   { id: 'matcha', label: 'မက်ချာ 🍵', icon: '🍵', color: 'bg-emerald-100 text-emerald-800 border-emerald-300' },
   { id: 'cheese', label: 'ချိစ် 🧀', icon: '🧀', color: 'bg-yellow-100 text-yellow-800 border-yellow-300' },

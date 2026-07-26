@@ -1,6 +1,6 @@
 export type Step = 'welcome' | 'postcard' | 'cake' | 'sending' | 'fulfilled';
 
-export type CakeFlavor = 'pink' | 'chocolate' | 'matcha' | 'cheese';
+export type CakeFlavor = 'strawberry' | 'chocolate' | 'matcha' | 'cheese';
 
 export type Language = 'ko' | 'en' | 'my';
 

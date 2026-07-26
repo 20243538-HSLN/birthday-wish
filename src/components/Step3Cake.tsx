@@ -13,7 +13,7 @@ interface Step3CakeProps {
 }
 
 const FLAVOR_STYLES: Record<CakeFlavor, { top: string; body: string; stripe: string; sprinkles: string[] }> = {
-  pink: {
+  strawberry: {
     top: '#fff0f5',
     body: '#fde8f0',
     stripe: '#f9c5d8',
