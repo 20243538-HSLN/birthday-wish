@@ -11,7 +11,7 @@ export interface WishData {
 const STORAGE_KEY = 'birthday_card_gsheet_webhook_url';
 
 // 💡 Paste your Google Apps Script Web App URL here so all friends' responses are saved automatically!
-export const DEFAULT_WEBHOOK_URL = '';
+export const DEFAULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxpM_B_rna0dekd4N-k1Y-HyENtl6l9WVqyZ0qFyL2g-CQoC87AFL2z_1FO0wgCRHM/exec';
 
 export function getStoredWebhookUrl(): string {
   const envUrl = ((import.meta as any).env?.VITE_GOOGLE_SHEET_WEBHOOK_URL as string) || '';

@@ -303,6 +303,15 @@ export const Step1Welcome: React.FC<Step1WelcomeProps> = ({
           {isKo ? '열어보기 →' : isEn ? 'Open Card →' : 'ကတ်ဖွင့်ကြည့်ရန် →'}
         </button>
 
+        {/* Security / Privacy notice */}
+        <p className="text-[11px] font-serif text-gray-400 text-center mt-2.5 opacity-85">
+          🔒 {isKo
+            ? '입력하신 정보는 안전하게 보호됩니다.'
+            : isEn
+            ? 'Your information is safely protected.'
+            : 'သင်ဖြည့်သွင်းထားသော အချက်အလက်များကို ဘေးကင်းစွာ ကာကွယ်ထားပါသည်။'}
+        </p>
+
         {/* Decorative Wave SVG */}
         <div className="mt-5">
           <svg width="180" height="30" viewBox="0 0 180 30" className="mx-auto">

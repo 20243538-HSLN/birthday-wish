@@ -26,7 +26,6 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
   const [showSheetModal, setShowSheetModal] = useState(false);
   const [sheetUrl, setSheetUrl] = useState('');
   const [saveSuccess, setSaveSuccess] = useState(false);
-  const [secretClickCount, setSecretClickCount] = useState(0);
 
   useEffect(() => {
     setSheetUrl(getStoredWebhookUrl());
@@ -39,13 +38,6 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
     soundEngine.playSparkle();
     setSparkling(true);
     setTimeout(() => setSparkling(false), 600);
-
-    const newCount = secretClickCount + 1;
-    setSecretClickCount(newCount);
-    if (newCount >= 5) {
-      setShowSheetModal(true);
-      setSecretClickCount(0);
-    }
   };
 
   const handleSaveSheetUrl = () => {
