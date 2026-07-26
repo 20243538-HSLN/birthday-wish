@@ -256,53 +256,74 @@ export const Step4Sending: React.FC<Step4SendingProps> = ({ wishText, lang, onCo
       const rawText = wishText.trim() || defaultWishMsg;
       const fullWishText = `"${rawText}"`;
 
-      const fontStr = '12px Nanum Myeongjo, serif, sans-serif';
+      const fontStr = '12px "Pyidaungsu", "Noto Sans Myanmar", Nanum Myeongjo, serif, sans-serif';
       ctx.font = fontStr;
 
-      const maxBoxW = Math.min(width * 0.85, 320);
-      const maxTextW = maxBoxW - 32;
+      const maxBoxW = Math.min(width * 0.85, 310);
+      const maxTextW = maxBoxW - 36;
 
-      // Helper to wrap text into lines for canvas
+      // Helper to split text into grapheme clusters (keeps Burmese diacritics attached)
+      const getGraphemes = (str: string): string[] => {
+        if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+          const segmenter = new Intl.Segmenter(undefined, { granularity: 'grapheme' });
+          return Array.from(segmenter.segment(str), (s) => s.segment);
+        }
+        return Array.from(str);
+      };
+
+      // Helper to wrap text into lines for canvas safely
       const wrapCanvasText = (str: string, maxW: number): string[] => {
         const lines: string[] = [];
         const paragraphs = str.split('\n');
+
         for (const p of paragraphs) {
           if (!p) continue;
           const words = p.split(' ');
-          let line = '';
-          for (let i = 0; i < words.length; i++) {
-            const test = line ? `${line} ${words[i]}` : words[i];
-            if (ctx.measureText(test).width > maxW && line) {
-              lines.push(line);
-              line = words[i];
+          let currentLine = '';
+
+          for (const word of words) {
+            if (!word) continue;
+
+            const test = currentLine ? `${currentLine} ${word}` : word;
+
+            if (ctx.measureText(test).width <= maxW) {
+              currentLine = test;
             } else {
-              line = test;
-            }
-          }
-          if (line) {
-            if (ctx.measureText(line).width > maxW && line.length > 8) {
-              let charLine = '';
-              for (const ch of line) {
-                if (ctx.measureText(charLine + ch).width > maxW && charLine) {
-                  lines.push(charLine);
-                  charLine = ch;
-                } else {
-                  charLine += ch;
+              if (currentLine) {
+                lines.push(currentLine);
+                currentLine = '';
+              }
+
+              if (ctx.measureText(word).width <= maxW) {
+                currentLine = word;
+              } else {
+                // Break word by graphemes if it exceeds maxW (e.g. Burmese phrases without spaces)
+                const graphemes = getGraphemes(word);
+                for (const g of graphemes) {
+                  const testG = currentLine + g;
+                  if (ctx.measureText(testG).width > maxW && currentLine) {
+                    lines.push(currentLine);
+                    currentLine = g;
+                  } else {
+                    currentLine = testG;
+                  }
                 }
               }
-              if (charLine) lines.push(charLine);
-            } else {
-              lines.push(line);
             }
           }
+
+          if (currentLine) {
+            lines.push(currentLine);
+          }
         }
+
         return lines.length > 0 ? lines : [str];
       };
 
       const wishLines = wrapCanvasText(fullWishText, maxTextW);
       const maxMeasuredW = Math.max(...wishLines.map((l) => ctx.measureText(l).width));
       const boxW = Math.max(160, Math.min(maxBoxW, maxMeasuredW + 36));
-      const lineHeight = 18;
+      const lineHeight = lang === 'my' ? 22 : 19;
       const boxH = Math.max(48, wishLines.length * lineHeight + 20);
       const bx = wx - boxW / 2;
       const by = bub.y - boxH / 2;
@@ -353,7 +374,7 @@ export const Step4Sending: React.FC<Step4SendingProps> = ({ wishText, lang, onCo
     render();
 
     return () => cancelAnimationFrame(animFrameId);
-  }, [wishText]);
+  }, [wishText, lang, isKo, isEn]);
 
   return (
     <div className="fixed inset-0 w-full h-full bg-[#0a0618] overflow-hidden flex flex-col justify-end items-center z-20 pb-12">
