@@ -11,11 +11,19 @@ import { Step, CakeFlavor, Language } from './types';
 import { soundEngine } from './utils/soundEngine';
 import { sendWishToGoogleSheet } from './utils/googleSheets';
 
+const getTodayDateString = () => {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dd = String(today.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+};
+
 export default function App() {
   const [step, setStep] = useState<Step>('welcome');
   const [recipientName, setRecipientName] = useState('');
-  const [birthdate, setBirthdate] = useState<string>('2006-08-02');
-  const [age, setAge] = useState<number>(20);
+  const [birthdate, setBirthdate] = useState<string>(() => getTodayDateString());
+  const [age, setAge] = useState<number>(0);
   const [customMessage, setCustomMessage] = useState('');
   const [wishText, setWishText] = useState('');
   const [cakeFlavor, setCakeFlavor] = useState<CakeFlavor>('strawberry');

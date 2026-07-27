@@ -1,6 +1,6 @@
 {
   "name": "Birthday Wish",
   "description": "A dreamy pixel-art birthday wish web app with interactive cake, sound effects, music box BGM, and wish sky launch.",
-  "requestFramePermissions": ["microphone"],
+  "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

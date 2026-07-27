@@ -55,12 +55,17 @@ export const Step1Welcome: React.FC<Step1WelcomeProps> = ({
   const isEn = lang === 'en';
   const flavors = isKo ? FLAVORS_KO : isEn ? FLAVORS_EN : FLAVORS_MY;
 
-  const [yStr, mStr, dStr] = (birthdate || '2006-08-02').split('-');
-  const selectedYear = parseInt(yStr, 10) || 2006;
-  const selectedMonth = parseInt(mStr, 10) || 8;
-  const selectedDay = parseInt(dStr, 10) || 2;
+  const todayY = new Date().getFullYear();
+  const todayM = new Date().getMonth() + 1;
+  const todayD = new Date().getDate();
+  const defaultToday = `${todayY}-${String(todayM).padStart(2, '0')}-${String(todayD).padStart(2, '0')}`;
 
-  const yearsList = Array.from({ length: 87 }, (_, i) => 2026 - i);
+  const [yStr, mStr, dStr] = (birthdate || defaultToday).split('-');
+  const selectedYear = parseInt(yStr, 10) || todayY;
+  const selectedMonth = parseInt(mStr, 10) || todayM;
+  const selectedDay = parseInt(dStr, 10) || todayD;
+
+  const yearsList = Array.from({ length: 87 }, (_, i) => todayY - i);
   const monthsList = Array.from({ length: 12 }, (_, i) => i + 1);
   const maxDaysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
   const daysList = Array.from({ length: maxDaysInMonth }, (_, i) => i + 1);
@@ -72,11 +77,8 @@ export const Step1Welcome: React.FC<Step1WelcomeProps> = ({
     if (parts.length === 3) {
       const birthYear = parseInt(parts[0], 10);
       if (!isNaN(birthYear) && birthYear > 1900) {
-        // Turning age in celebration year (e.g., 2026 - 2006 = 20)
         const calc = new Date().getFullYear() - birthYear;
-        if (calc > 0) {
-          onChangeAge(calc);
-        }
+        onChangeAge(calc >= 0 ? calc : 0);
       }
     }
   };
@@ -250,7 +252,13 @@ export const Step1Welcome: React.FC<Step1WelcomeProps> = ({
             {/* Calculated Milestone Banner */}
             <div className="text-[11px] font-serif text-pink-800 bg-pink-50 border border-pink-200/80 rounded-xl py-1.5 px-3 text-center inline-block w-full">
               ✨{' '}
-              {age === 20
+              {age === 0
+                ? isKo
+                  ? '오늘 생일의 특별한 추억 ✦'
+                  : isEn
+                  ? 'Special Memory for Today\'s Birthday ✦'
+                  : 'ဒီနေ့ မွေးနေ့ အထူးအမှတ်တရ ✦'
+                : age === 20
                 ? isKo
                   ? '빛나는 스무 살의 특별한 추억 ✦'
                   : isEn
@@ -259,7 +267,15 @@ export const Step1Welcome: React.FC<Step1WelcomeProps> = ({
                 : isKo
                 ? `${age}번째 생일의 특별한 추억 ✦`
                 : isEn
-                ? `${age}${age === 21 ? 'st' : age === 22 ? 'nd' : age === 23 ? 'rd' : 'th'} Birthday Special Memory ✦`
+                ? `${age}${
+                    age % 10 === 1 && age !== 11
+                      ? 'st'
+                      : age % 10 === 2 && age !== 12
+                      ? 'nd'
+                      : age % 10 === 3 && age !== 13
+                      ? 'rd'
+                      : 'th'
+                  } Birthday Special Memory ✦`
                 : `${age} နှစ်မြောက် အထူးမွေးနေ့ ✦`}
             </div>
           </div>
